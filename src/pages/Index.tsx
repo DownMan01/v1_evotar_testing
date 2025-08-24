@@ -101,7 +101,7 @@ const Index = () => {
             </Button>
             
             <div className="text-xs text-primary-foreground/60">
-              Official digital voting platform for <span className="font-semibold text-primary-foreground/80">SJCSI</span> student elections
+              Digital voting platform for <span className="font-semibold text-primary-foreground/80">SJCSI</span> student elections
             </div>
           </div>
         </div>
