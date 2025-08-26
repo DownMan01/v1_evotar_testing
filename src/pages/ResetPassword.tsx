@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,7 +17,7 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(true);
   const [hasValidSession, setHasValidSession] = useState(false);
-  const [searchParams] = useSearchParams();
+  
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -49,48 +49,57 @@ const ResetPassword = () => {
   useEffect(() => {
     const validateResetToken = async () => {
       try {
-        // Check if we have access and refresh tokens in URL
-        const accessToken = searchParams.get('access_token');
-        const refreshToken = searchParams.get('refresh_token');
+        // Supabase appends recovery tokens to the URL hash (#). Fallback to query string just in case.
+        const hash = window.location.hash?.startsWith('#')
+          ? window.location.hash.slice(1)
+          : window.location.hash || '';
+        const hashParams = new URLSearchParams(hash);
+        const queryParams = new URLSearchParams(window.location.search);
 
-        if (!accessToken || !refreshToken) {
+        const accessToken = hashParams.get('access_token') || queryParams.get('access_token');
+        const refreshToken = hashParams.get('refresh_token') || queryParams.get('refresh_token');
+        const type = hashParams.get('type') || queryParams.get('type');
+
+        if (type !== 'recovery' || !accessToken || !refreshToken) {
           toast({
-            title: "Invalid Reset Link",
-            description: "This password reset link is invalid or has expired.",
+            title: "Invalid or Expired Link",
+            description: "Your password reset link is invalid or has expired. Please request a new one.",
             variant: "destructive",
           });
           navigate('/login');
           return;
         }
 
-        // Set the session with the tokens
+        // Establish a session using the provided tokens
         const { data, error } = await supabase.auth.setSession({
           access_token: accessToken,
           refresh_token: refreshToken,
         });
 
-        if (error || !data.session || !data.user) {
+        if (error || !data.session) {
           toast({
-            title: "Invalid Reset Link",
-            description: "This password reset link is invalid or has expired.",
+            title: "Invalid or Expired Link",
+            description: "Your password reset link is invalid or has expired. Please request a new one.",
             variant: "destructive",
           });
           navigate('/login');
           return;
         }
 
-        // Verify the session is valid by getting the current user
+        // Optional: verify user is available
         const { data: userData, error: userError } = await supabase.auth.getUser();
-        
         if (userError || !userData.user) {
           toast({
-            title: "Invalid Reset Link",
-            description: "This password reset link is invalid or has expired.",
+            title: "Invalid or Expired Link",
+            description: "Your password reset link is invalid or has expired. Please request a new one.",
             variant: "destructive",
           });
           navigate('/login');
           return;
         }
+
+        // Clean sensitive tokens from the URL bar
+        window.history.replaceState({}, document.title, window.location.pathname);
 
         setHasValidSession(true);
       } catch (error) {
@@ -106,7 +115,7 @@ const ResetPassword = () => {
     };
 
     validateResetToken();
-  }, [searchParams, navigate, toast]);
+  }, [navigate, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -304,10 +313,10 @@ const ResetPassword = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-4 md:px-8 pb-20">
-        <Card className="w-full max-w-md bg-card shadow-xl">
-          <CardHeader className="text-center">
-            <CardTitle className="text-xl font-semibold text-blue-600 flex items-center justify-center gap-2">
+      <div className="relative z-10 min-h-screen flex items-center justify-center px-3 md:px-8 pb-20 py-4">
+        <Card className="w-full max-w-md bg-card shadow-xl mx-2">
+          <CardHeader className="text-center p-4 md:p-6">
+            <CardTitle className="text-lg md:text-xl font-semibold text-blue-600 flex items-center justify-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
@@ -316,16 +325,17 @@ const ResetPassword = () => {
               >
                 <ArrowLeft className="h-4 w-4" />
               </Button>
-              Reset Your Password
+              <span className="hidden sm:inline">Reset Your Password</span>
+              <span className="sm:hidden">Reset Password</span>
             </CardTitle>
             <p className="text-sm text-muted-foreground">
               Enter your new password below
             </p>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 md:p-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="password">New Password</Label>
+                <Label htmlFor="password" className="text-sm font-medium">New Password</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -335,12 +345,13 @@ const ResetPassword = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength={6}
+                    className="mobile-form-field pr-12"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent touch-manipulation"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -353,7 +364,7 @@ const ResetPassword = () => {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm New Password</Label>
                 <div className="relative">
                   <Input
                     id="confirmPassword"
@@ -363,12 +374,13 @@ const ResetPassword = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                     minLength={6}
+                    className="mobile-form-field pr-12"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent touch-manipulation"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
@@ -382,7 +394,7 @@ const ResetPassword = () => {
               
               <Button 
                 type="submit" 
-                className="w-full bg-blue-600 hover:bg-blue-700" 
+                className="w-full bg-blue-600 hover:bg-blue-700 h-12 text-base font-medium touch-manipulation" 
                 disabled={isLoading}
               >
                 {isLoading ? 'Updating...' : 'Update Password'}
@@ -392,8 +404,8 @@ const ResetPassword = () => {
         </Card>
       </div>
 
-      {/* White Footer */}
-      <footer className="absolute bottom-0 left-0 right-0 bg-background border-t z-20">
+      {/* White Footer - Hidden on mobile */}
+      <footer className="hidden md:block absolute bottom-0 left-0 right-0 bg-background border-t z-20">
         <div className="flex justify-center space-x-6 py-4 text-sm text-muted-foreground">
           <a href="#" className="hover:text-primary transition-colors">About</a>
           <a href="#" className="hover:text-primary transition-colors">FAQ</a>
