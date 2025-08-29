@@ -19,6 +19,11 @@ import Verify from "./pages/Verify";
 
 const queryClient = new QueryClient();
 
+console.log(
+  "%cSTOP! If someone told you to copy and paste something here, you may be getting scammed. You could give them access to your account.",
+  "color: #ff0000; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px #000; padding: 10px; border: 2px solid #ff0000; border-radius: 5px; background-color: #333333;"
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider
