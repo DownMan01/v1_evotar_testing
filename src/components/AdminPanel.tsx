@@ -376,18 +376,6 @@ export const AdminPanel = () => {
         )}
 
         {canViewAuditLogs && (
-      { /*
-            Wrap audit logs in an overflow container so on small screens the logs
-            are horizontally scrollable instead of forcing the entire page to
-            expand/stretch. We add a min-w wrapper to preserve tables/layouts
-            inside the child component while allowing the parent container to
-            remain within the viewport width.
-
-            Additional classes:
-              - overflow-x-auto: allow horizontal scrolling within this area
-              - max-w-full: keep wrapper from exceeding viewport width
-              - break-words & whitespace-pre-wrap: help wrap long text lines
-          */}
           <TabsContent value="audit" className="space-y-6">
             <div className="w-full overflow-x-auto max-w-full">
               <div className="min-w-[320px] max-w-full break-words whitespace-pre-wrap">
