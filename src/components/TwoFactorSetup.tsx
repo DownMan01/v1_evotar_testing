@@ -144,11 +144,11 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
                   <Label className="text-xs text-muted-foreground">
                     Manual Entry Key
                   </Label>
-                  <div className="flex items-center gap-2 w-full">
+                  <div className="flex items-center gap-2 w-full flex-wrap">
                     <Input
                       value={setupData.secret}
                       readOnly
-                      className="font-mono text-xs sm:text-sm select-all w-full"
+                      className="font-mono text-xs sm:text-sm select-all flex-1 min-w-0"
                     />
                     <Button
                       variant="outline"
