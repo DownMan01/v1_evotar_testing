@@ -63,8 +63,8 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
     navigator.clipboard.writeText(codesText);
     setCopiedCodes(true);
     toast({
-      title: "Copied",
-      description: "Backup codes copied to clipboard",
+      title: 'Copied',
+      description: 'Backup codes copied to clipboard',
     });
   };
 
@@ -79,73 +79,69 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="w-full max-w-md h-[90vh] sm:h-auto sm:max-h-[90vh] mx-2 sm:mx-0 p-4 sm:p-6 
-                   rounded-lg sm:rounded-xl overflow-y-auto"
-      >
+      <DialogContent className="w-full max-w-md mx-4 sm:mx-auto max-h-[90vh] overflow-y-auto rounded-2xl">
         <DialogHeader className="pb-4">
-          <DialogTitle className="flex items-center gap-2 text-base sm:text-xl">
+          <DialogTitle className="flex items-center gap-2 text-base sm:text-lg font-semibold">
             <Shield className="h-5 w-5 text-primary flex-shrink-0" />
             Enable Two-Factor Authentication
           </DialogTitle>
         </DialogHeader>
 
         {step === 'verify' && setupData && (
-          <div className="space-y-4 pb-2">
-            {/* QR Code Section */}
-            <Card className="overflow-hidden">
-              <CardHeader className="pb-2 px-3 sm:px-6">
+          <div className="flex flex-col gap-4 pb-2">
+            <Card className="overflow-hidden w-full">
+              <CardHeader className="pb-2 px-4">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <QrCode className="h-4 w-4 flex-shrink-0" />
                   Scan QR Code
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 px-3 sm:px-6 pb-4">
-                <div className="flex justify-center p-3 sm:p-4 bg-background rounded-lg">
+              <CardContent className="space-y-3 px-4 pb-4">
+                <div className="flex justify-center p-3 bg-background rounded-lg w-full">
                   <img
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
                       setupData.qrCode
                     )}`}
                     alt="2FA QR Code"
-                    className="w-36 h-36 sm:w-48 sm:h-48 border rounded-lg animate-fade-in"
+                    className="w-36 h-36 sm:w-44 sm:h-44 border rounded-lg"
                     loading="lazy"
-                    onLoad={(e) =>
-                      (e.target as HTMLImageElement).classList.add('animate-fade-in')
-                    }
                   />
                 </div>
 
-                {/* Manual Entry Key */}
                 <div className="space-y-2">
-                  <Label className="text-xs text-muted-foreground">Manual Entry Key</Label>
-                  <div className="flex items-center gap-2">
+                  <Label className="text-xs text-muted-foreground">
+                    Manual Entry Key
+                  </Label>
+                  <div className="flex items-center gap-2 w-full">
                     <Input
                       value={setupData.secret}
                       readOnly
-                      className="font-mono text-xs sm:text-sm select-all"
+                      className="font-mono text-xs sm:text-sm select-all w-full"
                     />
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-shrink-0 h-10 w-10 p-0"
+                      className="flex-shrink-0 h-9 w-9 p-0"
                       onClick={() => {
                         navigator.clipboard.writeText(setupData.secret);
                         toast({
-                          title: "Copied",
-                          description: "Secret key copied to clipboard",
+                          title: 'Copied',
+                          description: 'Secret key copied to clipboard',
                         });
                       }}
                     >
-                      <Copy className="h-3 w-3" />
+                      <Copy className="h-3.5 w-3.5" />
                     </Button>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Verification Input */}
-            <div className="space-y-3">
-              <Label htmlFor="verification-code" className="text-sm font-medium">
+            <div className="space-y-2">
+              <Label
+                htmlFor="verification-code"
+                className="text-sm font-medium"
+              >
                 Enter 6-digit code from your authenticator app
               </Label>
               <Input
@@ -155,7 +151,9 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
                 placeholder="000000"
                 value={verificationCode}
                 onChange={(e) =>
-                  setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))
+                  setVerificationCode(
+                    e.target.value.replace(/\D/g, '').slice(0, 6)
+                  )
                 }
                 className="text-center font-mono text-lg sm:text-xl tracking-widest h-12 sm:h-14"
                 maxLength={6}
@@ -163,7 +161,6 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
               />
             </div>
 
-            {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Button
                 variant="outline"
@@ -184,25 +181,25 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
         )}
 
         {step === 'backup' && setupData && (
-          <div className="space-y-4 pb-2">
-            {/* Success Message */}
+          <div className="flex flex-col gap-4 pb-2">
             <div className="text-center space-y-3">
               <CheckCircle className="h-10 w-10 sm:h-12 sm:w-12 text-success mx-auto" />
-              <h3 className="font-semibold text-base sm:text-lg">2FA Enabled Successfully!</h3>
+              <h3 className="font-semibold text-base sm:text-lg">
+                2FA Enabled Successfully!
+              </h3>
               <p className="text-sm text-muted-foreground px-2">
                 Save these backup codes in a secure location
               </p>
             </div>
 
-            {/* Backup Codes */}
-            <Card>
-              <CardHeader className="pb-2 px-3 sm:px-6">
+            <Card className="w-full">
+              <CardHeader className="pb-2 px-4">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <Key className="h-4 w-4 flex-shrink-0" />
                   Backup Recovery Codes
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-3 sm:px-6">
+              <CardContent className="px-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
                   {setupData.backupCodes.map((code, index) => (
                     <Badge
@@ -236,11 +233,11 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
               </CardContent>
             </Card>
 
-            {/* Important Note */}
             <div className="bg-muted p-3 rounded-lg mx-1">
               <p className="text-xs text-muted-foreground leading-relaxed">
-                <strong>Important:</strong> Store these codes safely. Each can only be used once to
-                access your account if you lose your authenticator device.
+                <strong>Important:</strong> Store these codes safely. Each can
+                only be used once to access your account if you lose your
+                authenticator device.
               </p>
             </div>
 
