@@ -28,7 +28,7 @@ export const SecuritySettings = () => {
     <>
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+          <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 sm:h-6 sm:w-6" />
             Security Settings
           </CardTitle>
