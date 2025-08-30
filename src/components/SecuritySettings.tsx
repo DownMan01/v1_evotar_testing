@@ -73,6 +73,7 @@ export const SecuritySettings = () => {
                 <Button
                   onClick={() => setShowSetup(true)}
                   disabled={loading}
+                  className="w-full sm:w-auto"
                 >
                   Enable 2FA
                 </Button>
