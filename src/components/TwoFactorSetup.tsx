@@ -9,7 +9,6 @@ import { useTwoFactor } from '@/hooks/useTwoFactor';
 import { QrCode, Shield, Key, Copy, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-
 interface TwoFactorSetupProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -25,7 +24,7 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
   } | null>(null);
   const [verificationCode, setVerificationCode] = useState('');
   const [copiedCodes, setCopiedCodes] = useState(false);
-  
+
   const { generateTwoFactorSetup, enableTwoFactor, loading } = useTwoFactor();
   const { toast } = useToast();
 
@@ -59,7 +58,7 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
 
   const handleCopyBackupCodes = () => {
     if (!setupData) return;
-    
+
     const codesText = setupData.backupCodes.join('\n');
     navigator.clipboard.writeText(codesText);
     setCopiedCodes(true);
@@ -80,9 +79,12 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md mx-4 lg:mx-0 max-h-[90vh] overflow-y-auto">
+      <DialogContent
+        className="w-full max-w-md h-[90vh] sm:h-auto sm:max-h-[90vh] mx-2 sm:mx-0 p-4 sm:p-6 
+                   rounded-lg sm:rounded-xl overflow-y-auto"
+      >
         <DialogHeader className="pb-4">
-          <DialogTitle className="flex items-center gap-2 text-lg lg:text-xl">
+          <DialogTitle className="flex items-center gap-2 text-base sm:text-xl">
             <Shield className="h-5 w-5 text-primary flex-shrink-0" />
             Enable Two-Factor Authentication
           </DialogTitle>
@@ -90,31 +92,37 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
 
         {step === 'verify' && setupData && (
           <div className="space-y-4 pb-2">
+            {/* QR Code Section */}
             <Card className="overflow-hidden">
-              <CardHeader className="pb-2 px-3 lg:px-6">
+              <CardHeader className="pb-2 px-3 sm:px-6">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <QrCode className="h-4 w-4 flex-shrink-0" />
                   Scan QR Code
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 px-3 lg:px-6 pb-4">
-                <div className="flex justify-center p-3 lg:p-4 bg-background rounded-lg">
-                  <img 
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(setupData.qrCode)}`}
+              <CardContent className="space-y-3 px-3 sm:px-6 pb-4">
+                <div className="flex justify-center p-3 sm:p-4 bg-background rounded-lg">
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
+                      setupData.qrCode
+                    )}`}
                     alt="2FA QR Code"
-                    className="w-36 h-36 lg:w-48 lg:h-48 border rounded-lg animate-fade-in"
+                    className="w-36 h-36 sm:w-48 sm:h-48 border rounded-lg animate-fade-in"
                     loading="lazy"
-                    onLoad={(e) => (e.target as HTMLImageElement).classList.add('animate-fade-in')}
+                    onLoad={(e) =>
+                      (e.target as HTMLImageElement).classList.add('animate-fade-in')
+                    }
                   />
                 </div>
-                
+
+                {/* Manual Entry Key */}
                 <div className="space-y-2">
                   <Label className="text-xs text-muted-foreground">Manual Entry Key</Label>
                   <div className="flex items-center gap-2">
-                    <Input 
-                      value={setupData.secret} 
-                      readOnly 
-                      className="font-mono text-xs lg:text-sm select-all"
+                    <Input
+                      value={setupData.secret}
+                      readOnly
+                      className="font-mono text-xs sm:text-sm select-all"
                     />
                     <Button
                       variant="outline"
@@ -122,7 +130,10 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
                       className="flex-shrink-0 h-10 w-10 p-0"
                       onClick={() => {
                         navigator.clipboard.writeText(setupData.secret);
-                        toast({ title: "Copied", description: "Secret key copied to clipboard" });
+                        toast({
+                          title: "Copied",
+                          description: "Secret key copied to clipboard",
+                        });
                       }}
                     >
                       <Copy className="h-3 w-3" />
@@ -132,6 +143,7 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
               </CardContent>
             </Card>
 
+            {/* Verification Input */}
             <div className="space-y-3">
               <Label htmlFor="verification-code" className="text-sm font-medium">
                 Enter 6-digit code from your authenticator app
@@ -142,25 +154,28 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
                 inputMode="numeric"
                 placeholder="000000"
                 value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                className="text-center font-mono text-lg lg:text-xl tracking-widest h-12 lg:h-14"
+                onChange={(e) =>
+                  setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))
+                }
+                className="text-center font-mono text-lg sm:text-xl tracking-widest h-12 sm:h-14"
                 maxLength={6}
                 autoComplete="one-time-code"
               />
             </div>
 
-            <div className="flex flex-col lg:flex-row gap-3 pt-2">
-              <Button 
-                variant="outline" 
-                onClick={() => onOpenChange(false)} 
-                className="flex-1 h-11 lg:h-10"
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Button
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                className="flex-1 h-11 sm:h-10"
               >
                 Cancel
               </Button>
-              <Button 
-                onClick={handleVerifyCode} 
+              <Button
+                onClick={handleVerifyCode}
                 disabled={verificationCode.length !== 6 || loading}
-                className="flex-1 h-11 lg:h-10"
+                className="flex-1 h-11 sm:h-10"
               >
                 {loading ? 'Verifying...' : 'Verify & Enable'}
               </Button>
@@ -170,38 +185,40 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
 
         {step === 'backup' && setupData && (
           <div className="space-y-4 pb-2">
+            {/* Success Message */}
             <div className="text-center space-y-3">
-              <CheckCircle className="h-10 w-10 lg:h-12 lg:w-12 text-success mx-auto" />
-              <h3 className="font-semibold text-base lg:text-lg">2FA Enabled Successfully!</h3>
+              <CheckCircle className="h-10 w-10 sm:h-12 sm:w-12 text-success mx-auto" />
+              <h3 className="font-semibold text-base sm:text-lg">2FA Enabled Successfully!</h3>
               <p className="text-sm text-muted-foreground px-2">
                 Save these backup codes in a secure location
               </p>
             </div>
 
+            {/* Backup Codes */}
             <Card>
-              <CardHeader className="pb-2 px-3 lg:px-6">
+              <CardHeader className="pb-2 px-3 sm:px-6">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <Key className="h-4 w-4 flex-shrink-0" />
                   Backup Recovery Codes
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-3 lg:px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-4">
+              <CardContent className="px-3 sm:px-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
                   {setupData.backupCodes.map((code, index) => (
-                    <Badge 
-                      key={index} 
-                      variant="secondary" 
-                      className="justify-center font-mono text-xs lg:text-sm py-2 lg:py-1 select-all"
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="justify-center font-mono text-xs sm:text-sm py-2 sm:py-1 select-all"
                     >
                       {code}
                     </Badge>
                   ))}
                 </div>
-                
-                <Button 
-                  variant="outline" 
+
+                <Button
+                  variant="outline"
                   onClick={handleCopyBackupCodes}
-                  className="w-full h-11 lg:h-10"
+                  className="w-full h-11 sm:h-10"
                   disabled={copiedCodes}
                 >
                   {copiedCodes ? (
@@ -219,13 +236,15 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
               </CardContent>
             </Card>
 
+            {/* Important Note */}
             <div className="bg-muted p-3 rounded-lg mx-1">
               <p className="text-xs text-muted-foreground leading-relaxed">
-                <strong>Important:</strong> Store these codes safely. Each can only be used once to access your account if you lose your authenticator device.
+                <strong>Important:</strong> Store these codes safely. Each can only be used once to
+                access your account if you lose your authenticator device.
               </p>
             </div>
 
-            <Button onClick={handleComplete} className="w-full h-11 lg:h-10">
+            <Button onClick={handleComplete} className="w-full h-11 sm:h-10">
               Complete Setup
             </Button>
           </div>
