@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 interface MobileOptimizedGridProps {
   children: ReactNode;
   className?: string;
-  mobileColumns?: 1 | 2;
+  mobileColumns?: 1 | 2 | 3 | 4;
   desktopColumns?: 2 | 3 | 4 | 5 | 6;
   gap?: 'sm' | 'md' | 'lg';
 }
@@ -27,7 +27,9 @@ export const MobileOptimizedGrid = ({
 
   const mobileGridClasses = {
     1: 'grid-cols-1',
-    2: 'grid-cols-2'
+    2: 'grid-cols-2',
+    3: 'grid-cols-3',
+    4: 'grid-cols-4'
   };
 
   const desktopGridClasses = {
