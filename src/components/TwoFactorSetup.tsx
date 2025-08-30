@@ -85,7 +85,7 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-full max-w-md mx-4 sm:mx-auto max-h-[90vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-md lg:mx-0 max-h-[90vh] overflow-y-auto mx-0">
         <DialogHeader className="pb-4">
           <DialogTitle className="flex items-center gap-2 text-base sm:text-lg font-semibold">
             <Shield className="h-5 w-5 text-primary flex-shrink-0" />
