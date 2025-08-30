@@ -261,14 +261,15 @@ export const Settings = () => {
                       <Dialog open={imageDialogOpen} onOpenChange={setImageDialogOpen}>
                         <DialogTrigger asChild>
                           <Button
-                               variant="secondary"
-                               className="absolute top-1 right-1 lg:top-2 lg:right-2 
-                               bg-black/70 hover:bg-black/80 text-white border-none 
-                               p-0 flex items-center justify-center
-                               h-8 w-8 lg:h-10 lg:w-10 rounded-full"
-                          >
-                          <Eye className="h-4 w-4 lg:h-5 lg:w-5" />
-                          </Button>
+                          variant="secondary"
+  className="absolute top-1 right-1 lg:top-2 lg:right-2
+             bg-black/70 hover:bg-black/80 text-white border-none
+             flex items-center justify-center
+             h-9 w-9 lg:h-10 lg:w-10 rounded-full p-0"
+>
+  <Eye className="h-4 w-4 lg:h-5 lg:w-5" />
+</Button>
+
 
                         </DialogTrigger>
                         <DialogContent className="w-[95vw] sm:max-w-4xl max-h-[90vh] overflow-auto">
