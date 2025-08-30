@@ -493,7 +493,7 @@ export const Settings = () => {
                                 disabled={
                                   !profileData.email || (profile?.role === 'Voter' && !profileData.year_level) || loading
                                 }
-                                className="min-w-[140px]"
+                                className="w-full sm:w-auto min-w-[140px]"
                               >
                                 {loading
                                   ? profile?.role === 'Voter'
