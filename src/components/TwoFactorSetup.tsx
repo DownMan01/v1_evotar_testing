@@ -29,8 +29,12 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
   const { toast } = useToast();
 
   useEffect(() => {
-    if (open && step === 'generate') {
-      handleGenerateSetup();
+    if (!open) {
+      // reset dialog when closed
+      setStep('generate');
+      setSetupData(null);
+      setVerificationCode('');
+      setCopiedCodes(false);
     }
   }, [open]);
 
@@ -53,6 +57,12 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
 
     if (success) {
       setStep('backup');
+    } else {
+      toast({
+        title: 'Verification failed',
+        description: 'The code entered is invalid. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -69,10 +79,6 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
   };
 
   const handleComplete = () => {
-    setStep('generate');
-    setSetupData(null);
-    setVerificationCode('');
-    setCopiedCodes(false);
     onOpenChange(false);
     onComplete?.();
   };
@@ -87,6 +93,32 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
           </DialogTitle>
         </DialogHeader>
 
+        {/* Step 1 - Generate */}
+        {step === 'generate' && (
+          <div className="flex flex-col gap-5 text-center pb-2">
+            <p className="text-sm text-muted-foreground">
+              Protect your account with an extra layer of security. You’ll need an
+              authenticator app (like Google Authenticator, Authy, or Microsoft
+              Authenticator) to complete the setup.
+            </p>
+            <Button
+              onClick={handleGenerateSetup}
+              disabled={loading}
+              className="h-11 sm:h-10"
+            >
+              {loading ? 'Generating...' : 'Start Setup'}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="h-11 sm:h-10"
+            >
+              Cancel
+            </Button>
+          </div>
+        )}
+
+        {/* Step 2 - Verify */}
         {step === 'verify' && setupData && (
           <div className="flex flex-col gap-4 pb-2">
             <Card className="overflow-hidden w-full">
@@ -164,10 +196,10 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Button
                 variant="outline"
-                onClick={() => onOpenChange(false)}
+                onClick={() => setStep('generate')}
                 className="flex-1 h-11 sm:h-10"
               >
-                Cancel
+                Back
               </Button>
               <Button
                 onClick={handleVerifyCode}
@@ -180,6 +212,7 @@ export const TwoFactorSetup = ({ open, onOpenChange, onComplete }: TwoFactorSetu
           </div>
         )}
 
+        {/* Step 3 - Backup */}
         {step === 'backup' && setupData && (
           <div className="flex flex-col gap-4 pb-2">
             <div className="text-center space-y-3">
