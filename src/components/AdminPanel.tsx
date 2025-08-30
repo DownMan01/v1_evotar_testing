@@ -376,7 +376,7 @@ export const AdminPanel = () => {
         )}
 
         {canViewAuditLogs && (
-          /*
+      { /*
             Wrap audit logs in an overflow container so on small screens the logs
             are horizontally scrollable instead of forcing the entire page to
             expand/stretch. We add a min-w wrapper to preserve tables/layouts
