@@ -375,10 +375,10 @@ export const Settings = () => {
                   <div className="pt-4">
                     <Dialog open={updateProfileDialogOpen} onOpenChange={setUpdateProfileDialogOpen}>
                       <DialogTrigger asChild>
-                        <Button className="flex items-center gap-2">
+                        <Button className="w-full sm:w-auto flex items-center gap-2">
                           <Edit className="h-4 w-4" />
-                          Update Profile
-                        </Button>
+                            Update Profile
+                          </Button>
                       </DialogTrigger>
                       <DialogContent className="w-[95vw] sm:max-w-md" aria-describedby="update-profile-description">
                         <DialogHeader>
@@ -531,9 +531,9 @@ export const Settings = () => {
                   </p>
 
                   <ChangePasswordDialog>
-                    <Button className="flex items-center gap-2">
-                      <Key className="h-4 w-4" />
-                      Change Password
+                    <Button className="w-full sm:w-auto flex items-center gap-2">
+                    <Key className="h-4 w-4" />
+                    Change Password
                     </Button>
                   </ChangePasswordDialog>
                 </div>
