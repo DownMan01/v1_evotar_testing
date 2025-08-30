@@ -37,7 +37,7 @@ export const SecuritySettings = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-3 sm:p-4 border rounded-lg">
             {/* Info + status */}
             <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-2">
                 <h3 className="font-medium">Two-Factor Authentication</h3>
                 {twoFactorEnabled ? (
                   <Badge
