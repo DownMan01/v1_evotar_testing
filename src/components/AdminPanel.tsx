@@ -268,7 +268,7 @@ export const AdminPanel = () => {
 
       {/* Tabs */}
       <Tabs defaultValue="approvals" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1">
+        <TabsList className="flex w-full overflow-x-auto gap-1">
           <TabsTrigger value="approvals" className="flex items-center gap-1 md:gap-2 text-xs md:text-sm">
             <Clock className="h-3 w-3 md:h-4 md:w-4" />
             <span className="hidden sm:inline">Pending Approvals</span>
