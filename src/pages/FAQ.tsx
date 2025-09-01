@@ -10,7 +10,7 @@ const FAQ = () => {
   const faqs = [
     {
       question: "How secure is my vote on Evotar?",
-      answer: "Your vote is protected by secure session management and database encryption. Each vote is immediately anonymized upon submission and cannot be traced back to you. We use role-based access controls and industry-standard security protocols to ensure the integrity of every election."
+      answer: "Your vote is protected by secure session management. Each vote is immediately anonymized upon submission and cannot be traced back to you. We use role-based access controls and industry-standard security protocols to ensure the integrity of every election."
     },
     {
       question: "Can I change my vote after submitting?",
@@ -26,15 +26,15 @@ const FAQ = () => {
     },
     {
       question: "How do I know if my vote was counted?",
-      answer: "After submitting your vote, you'll receive a confirmation screen showing your vote was recorded. You can also check your voting history in your dashboard to confirm your participation in each election, though specific vote choices remain anonymous."
+      answer: "After submitting your vote, a vote receipt will automatically download, and you'll receive a confirmation screen showing your vote was recorded. You can verify your votes through the QR code in the vote receipt, just scan it."
     },
     {
       question: "Can I vote from my mobile device?",
-      answer: "Yes! Evotar is fully responsive and optimized for mobile devices. You can vote securely from your smartphone or tablet using any modern web browser with the same security and functionality as desktop."
+      answer: "Yes! Evotar is fully responsive and optimized for mobile devices. You can vote securely from your smartphone or tablet using any modern web browser with the same security and functionality as a desktop."
     },
     {
       question: "What browsers are supported?",
-      answer: "Evotar works on all modern browsers including Chrome, Firefox, Safari, and Edge. We recommend using the latest version of your preferred browser for the best experience and security."
+      answer: "Evotar works on all modern browsers, including Chrome, Firefox, Safari, and Edge. We recommend using the latest version of your preferred browser for the best experience and security."
     },
     {
       question: "How are election results verified?",
@@ -42,7 +42,7 @@ const FAQ = () => {
     },
     {
       question: "What happens if there's a technical issue during voting?",
-      answer: "If you experience technical difficulties, try refreshing your browser first. Your voting session is automatically saved, so you won't lose your progress. If issues persist, contact SJCSI technical support immediately."
+      answer: "If you experience technical difficulties, try refreshing your browser first. Your voting session is automatically saved, so you won't lose your progress. If issues persist, contact Evotar technical support immediately."
     },
     {
       question: "Who can see how I voted?",
@@ -50,11 +50,11 @@ const FAQ = () => {
     },
     {
       question: "What roles exist in the system?",
-      answer: "Evotar has four main roles: Voters (can cast votes), Staff (can manage candidate approvals), Admins (can create elections and manage all aspects), and Super Admins (full system access). Your role determines what features you can access."
+      answer: "Evotar has four main roles: Voters (can cast votes), Staff (can manage approved elections), Admins (can create elections and manage all aspects), and Super Admins (full system access; developer of Evotar). Your role determines what features you can access."
     },
     {
       question: "How do I become a candidate?",
-      answer: "To become a candidate, you need to follow SJCSI's candidate registration process. Once registered, you'll submit your candidate information including bio, platform, and qualifications. SJCSI staff or admins will review and approve candidates before they appear in elections."
+      answer: "To become a candidate, you need to follow SAO's candidate registration process. Once registered, you'll submit your candidate information, including bio, platform, qualifications, and educational background. SAO staff or admins will review and approve candidates before they appear in elections."
     }
   ];
 

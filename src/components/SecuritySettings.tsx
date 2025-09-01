@@ -9,11 +9,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { TwoFactorSetup } from './TwoFactorSetup';
 import { TwoFactorVerification } from './TwoFactorVerification';
 
-
 export const SecuritySettings = () => {
   const [showSetup, setShowSetup] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
-  const { twoFactorEnabled, disableTwoFactor, loading } = useTwoFactor();
+  const { twoFactorEnabled, loading } = useTwoFactor();
   const { profile } = useAuth();
 
   const handleDisable2FA = () => {
@@ -21,28 +20,30 @@ export const SecuritySettings = () => {
   };
 
   const handleVerificationSuccess = async () => {
-    // The verification dialog will call disableTwoFactor internally
     setShowVerification(false);
     window.location.reload();
   };
-
 
   return (
     <>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5" />
+            <Shield className="h-5 w-5 sm:h-6 sm:w-6" />
             Security Settings
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-4 border rounded-lg">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-3 sm:p-4 border rounded-lg">
+            {/* Info + status */}
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <h3 className="font-medium">Two-Factor Authentication</h3>
                 {twoFactorEnabled ? (
-                  <Badge variant="default" className="bg-success text-success-foreground">
+                  <Badge
+                    variant="default"
+                    className="bg-success text-success-foreground flex items-center"
+                  >
                     <CheckCircle className="h-3 w-3 mr-1" />
                     Enabled
                   </Badge>
@@ -51,25 +52,28 @@ export const SecuritySettings = () => {
                 )}
               </div>
               <p className="text-sm text-muted-foreground">
-                {twoFactorEnabled 
+                {twoFactorEnabled
                   ? 'Your account is protected with two-factor authentication'
-                  : 'Add an extra layer of security to your account'
-                }
+                  : 'Add an extra layer of security to your account'}
               </p>
             </div>
-            <div className="flex gap-2">
+
+            {/* Buttons */}
+            <div className="flex gap-2 sm:shrink-0">
               {twoFactorEnabled ? (
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={handleDisable2FA}
                   disabled={loading}
+                  className="w-full sm:w-auto"
                 >
                   {loading ? 'Processing...' : 'Disable'}
                 </Button>
               ) : (
-                <Button 
+                <Button
                   onClick={() => setShowSetup(true)}
                   disabled={loading}
+                  className="w-full sm:w-auto"
                 >
                   Enable 2FA
                 </Button>
@@ -81,7 +85,8 @@ export const SecuritySettings = () => {
             <Alert>
               <Settings className="h-4 w-4" />
               <AlertDescription>
-                As an administrator, enabling 2FA is strongly recommended to protect sensitive system operations.
+                As an administrator, enabling 2FA is strongly recommended to protect
+                sensitive system operations.
               </AlertDescription>
             </Alert>
           )}
@@ -92,7 +97,6 @@ export const SecuritySettings = () => {
         open={showSetup}
         onOpenChange={setShowSetup}
         onComplete={() => {
-          // Refresh the page or trigger a re-fetch of profile data
           window.location.reload();
         }}
       />

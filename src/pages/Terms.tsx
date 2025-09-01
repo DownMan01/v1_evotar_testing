@@ -49,9 +49,9 @@ const Terms = () => {
             Terms of Service
           </h1>
           <p className="text-base md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed px-2">
-            Please read these terms carefully. By using Evotar at SJCSI, you agree to these conditions.
+            Please read these terms carefully. By using Evotar at Saint Joseph College of Sindangan, Inc., you agree to these conditions.
           </p>
-          <p className="text-white/80 mt-3 md:mt-4 text-xs md:text-base">Last updated: January 2025</p>
+          <p className="text-white/80 mt-3 md:mt-4 text-xs md:text-base">Last updated: August 2025</p>
         </div>
       </section>
 
@@ -112,8 +112,8 @@ const Terms = () => {
                   <div>
                      <h4 className="font-semibold text-foreground mb-2">Eligibility Requirements</h4>
                      <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                       <li>You must be a student or staff member of Saint Joseph College of Sindangan, Inc.</li>
-                       <li>You must have the appropriate role (Voter, Staff, Admin) assigned by SJCSI</li>
+                       <li>You must be a student or SAO administrator of Saint Joseph College of Sindangan, Inc.</li>
+                       <li>You must have the appropriate role (Voter, Staff) assigned by the SAO administrator</li>
                        <li>You must be eligible to participate in the specific SJCSI elections for which you are voting</li>
                        <li>You must provide accurate and complete registration information</li>
                      </ul>
@@ -140,9 +140,9 @@ const Terms = () => {
                      <p className="text-muted-foreground mb-2">You may use Evotar to:</p>
                      <ul className="list-disc list-inside space-y-1 text-muted-foreground">
                        <li>Participate in authorized SJCSI student elections based on your role</li>
-                       <li>Manage elections and candidates if you have Admin privileges</li>
-                       <li>Review and approve candidates if you have Staff privileges</li>
-                       <li>Access your voting history and account information</li>
+                       <li>Manage users, elections, and candidates if you have Admin privileges</li>
+                       <li>Review and manage candidates if you have Staff privileges</li>
+                       <li>Access your account information</li>
                        <li>Receive election-related communications and updates</li>
                      </ul>
                   </div>
@@ -270,7 +270,7 @@ const Terms = () => {
                     or election integrity.
                   </p>
                    <p className="text-muted-foreground">
-                     You may terminate your account at any time by contacting SJCSI's election administrator. Upon 
+                     You may terminate your account at any time by contacting SAO's election administrator. Upon 
                      termination, your right to use the platform ceases, but certain provisions of these terms will 
                      survive termination.
                    </p>
@@ -302,7 +302,7 @@ const Terms = () => {
                   </p>
                    <div className="space-y-2 text-muted-foreground">
                      <p><strong>Email:</strong> support@evotar.xyz</p>
-                     <p><strong>Address:</strong> SJCSI IT Department, Saint Joseph College of Sindangan, Inc.</p>
+                     <p><strong>Address:</strong> Student Affairs Office, Saint Joseph College of Sindangan, Inc.</p>
                    </div>
                 </CardContent>
               </Card>

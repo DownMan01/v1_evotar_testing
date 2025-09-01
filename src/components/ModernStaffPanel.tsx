@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PanelAccessGuard } from '@/components/PanelAccessGuard';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -62,25 +63,26 @@ export const ModernStaffPanel = () => {
   const pendingActionsCount = pendingActions.filter(a => a.status === 'Pending').length;
 
   return (
-    <div className="space-y-6">
-      {/* Header - Matching AdminPanel style */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-slate-950">
-          
-        </h2>
-        <div className="flex items-center gap-2 md:gap-4">
-          <Badge variant="outline" className="px-2 md:px-3 py-1 text-xs md:text-sm">
-            {pendingProfileRequests + pendingActionsCount} Pending
-          </Badge>
-          <RefreshButton
-            onClick={handleRefreshAll}
-            loading={requestsLoading || actionsLoading || statsLoading}
-            disabled={requestsLoading || actionsLoading || statsLoading}
-            text="Refresh Data"
-            mobileText="Refresh"
-          />
+    <PanelAccessGuard panelName="Staff Panel">
+      <div className="space-y-6">
+        {/* Header - Matching AdminPanel style */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-slate-950">
+            Staff Panel
+          </h2>
+          <div className="flex items-center gap-2 md:gap-4">
+            <Badge variant="outline" className="px-2 md:px-3 py-1 text-xs md:text-sm">
+              {pendingProfileRequests + pendingActionsCount} Pending
+            </Badge>
+            <RefreshButton
+              onClick={handleRefreshAll}
+              loading={requestsLoading || actionsLoading || statsLoading}
+              disabled={requestsLoading || actionsLoading || statsLoading}
+              text="Refresh Data"
+              mobileText="Refresh"
+            />
+          </div>
         </div>
-      </div>
 
       {/* Quick Stats Cards - Matching AdminPanel style */}
       {statsLoading ? (
@@ -308,5 +310,6 @@ export const ModernStaffPanel = () => {
         </TabsContent>
       </Tabs>
     </div>
+    </PanelAccessGuard>
   );
 };

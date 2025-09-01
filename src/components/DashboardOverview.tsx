@@ -31,7 +31,6 @@ export const DashboardOverview = () => {
 
   useEffect(() => {
     fetchDashboardStats();
-    // optional: you could add a subscription or interval here to refresh periodically
   }, []);
 
   const fetchDashboardStats = async () => {
@@ -63,16 +62,9 @@ export const DashboardOverview = () => {
             .eq('user_id', user.user.id)
             .single();
 
-          // --- UPDATED LOGIC: robustly determine if user voted in ANY active election ---
-          // Reason: previous code relied on the joined `elections` object which can be
-          // returned as an object or array depending on Supabase/PostgREST relation shape.
-          // To avoid ambiguity we build a list of active election ids and run a count query
-          // against voting_sessions for this user where has_voted = true and election_id IN activeIds.
-
           const activeIds = (activeElectionsData ?? []).map((e: any) => e.id).filter(Boolean);
 
           if (activeIds.length > 0) {
-            // ❗ UPDATED: Use a head=true select with count to avoid join shape problems
             const { count: votedCount, error: votedErr } = await supabase
               .from('voting_sessions')
               .select('*', { count: 'exact', head: true })
@@ -216,22 +208,47 @@ export const DashboardOverview = () => {
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</div>
                             <p>Navigate to the <strong>Elections</strong> tab to see all available elections</p>
                           </div>
+                          
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</div>
-                            <p>Click on an <Badge variant="secondary">Active</Badge> election to enter the voting booth</p>
+                            <p>Check the <Badge variant="success">Active</Badge> election if you are eligible to vote</p>
                           </div>
+                          
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</div>
-                            <p>Review all candidates and their information carefully</p>
+                             <p>Before you <Badge variant="default">Cast Vote</Badge> make sure to view the candidates</p>
                           </div>
+                          
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">4</div>
-                            <p>Select your preferred candidate and confirm your vote</p>
+                            <p>Review all candidates and their information carefully</p>
                           </div>
+                          
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">5</div>
-                            <p>Your vote is securely recorded and cannot be changed once submitted</p>
+                            <p>Select your preferred candidate and click the <Badge variant="default">Submit My Votes</Badge></p>
                           </div>
+                          
+                          <div className="flex items-start gap-3">
+                            <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">6</div>
+                            <p>Click <Badge variant="default">Submit My Votes</Badge>  to review your selected candidates</p>
+                          </div>                     
+                          
+                          <div className="flex items-start gap-3">
+                            <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">7</div>
+                            <p>Review your selected candidates and either <Badge variant="outline">Change Selection</Badge> or <Badge variant="default">Confirm & Submit</Badge></p>
+                          </div>
+
+                          <div className="flex items-start gap-3">
+                            <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">8</div>
+                            <p>To submit your vote, click <Badge variant="default">Confirm & Submit</Badge>, and a success message with a receipt will appear</p>
+                          </div>
+                          
+                          <div className="flex items-start gap-3">
+                            <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">9</div>
+                            <p>Your vote is securely recorded and cannot be changed after you confirm & submit</p>
+                          </div>
+                          
                         </CardContent>
                       </Card>
 
@@ -278,11 +295,15 @@ export const DashboardOverview = () => {
                           </div>
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</div>
-                            <p>Results are only visible for <Badge variant="default">Completed</Badge> elections when published by administrators</p>
+                            <p>Results are only visible for <Badge variant="secondary">Completed</Badge> elections when published by administrators</p>
                           </div>
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</div>
                             <p>View detailed vote counts, percentages, and winning candidates</p>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</div>
+                            <p>You can also view the result analytics</p>
                           </div>
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">4</div>
@@ -306,15 +327,15 @@ export const DashboardOverview = () => {
                           </div>
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</div>
-                            <p>Update your display name, contact information, and security settings</p>
+                            <p>Update your email address, year level, and security settings</p>
                           </div>
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</div>
-                            <p>Toggle between light and dark themes for your preferred viewing experience</p>
+                            <p>Updating your email address and year level requires staff approval</p>
                           </div>
                           <div className="flex items-start gap-3">
                             <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">4</div>
-                            <p>View your voting history and account registration status</p>
+                            <p>View your recent activity</p>
                           </div>
                         </CardContent>
                       </Card>
@@ -327,7 +348,7 @@ export const DashboardOverview = () => {
                             <div>
                               <h4 className="font-semibold text-primary mb-2">Security & Privacy</h4>
                               <p className="text-sm text-muted-foreground">
-                                Your votes are anonymous. Your identity is verified but never linked to your specific vote choices. 
+                                Your votes are strictly anonymous. Your identity is verified but never linked to your specific vote choices. 
                                 The system ensures complete electoral integrity while protecting your privacy.
                               </p>
                             </div>

@@ -56,7 +56,7 @@ const About = () => {
             About Evotar
           </h1>
             <p className="text-base md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed px-2">
-              The official digital voting platform for Saint Joseph College of Sindangan, Inc. student elections and democratic processes.
+              The digital voting platform for Saint Joseph College of Sindangan, Inc. student elections and democratic processes.
             </p>
         </div>
       </section>

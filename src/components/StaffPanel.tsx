@@ -1,4 +1,5 @@
 
+import { PanelAccessGuard } from '@/components/PanelAccessGuard';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -25,17 +26,18 @@ export const StaffPanel = () => {
   const pendingProfileRequests = profileUpdateRequests.filter(r => r.status === 'Pending').length;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h2 className="text-2xl font-bold">Staff Panel</h2>
-          {pendingProfileRequests > 0 && (
-            <Badge variant="destructive" className="px-3 py-1">
-              {pendingProfileRequests} Profile Requests Pending
-            </Badge>
-          )}
+    <PanelAccessGuard panelName="Staff Panel">
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <h2 className="text-2xl font-bold">Staff Panel</h2>
+            {pendingProfileRequests > 0 && (
+              <Badge variant="destructive" className="px-3 py-1">
+                {pendingProfileRequests} Profile Requests Pending
+              </Badge>
+            )}
+          </div>
         </div>
-      </div>
 
       {/* Staff Panel - Profile Updates Only */}
       <Tabs defaultValue="profile-updates" className="w-full">
@@ -56,5 +58,6 @@ export const StaffPanel = () => {
         </TabsContent>
       </Tabs>
     </div>
+    </PanelAccessGuard>
   );
 };

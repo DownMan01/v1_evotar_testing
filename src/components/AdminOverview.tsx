@@ -83,7 +83,8 @@ export const AdminOverview = () => {
         const { count: voteCount } = await supabase
           .from('voting_sessions')
           .select('*', { count: 'exact', head: true })
-          .in('election_id', activeElectionIds);
+          .in('election_id', activeElectionIds)
+          .eq('has_voted', true); 
         activeElectionVotes = voteCount || 0;
       }
 
@@ -176,7 +177,7 @@ export const AdminOverview = () => {
            <CardHeader className="pb-2">
              <CardTitle className="text-sm font-medium flex items-center gap-2">
                <Clock className="h-4 w-4 text-warning" />
-               Pending
+               Pending Users
              </CardTitle>
            </CardHeader>
            <CardContent>
@@ -204,7 +205,7 @@ export const AdminOverview = () => {
            <CardHeader className="pb-2">
              <CardTitle className="text-sm font-medium flex items-center gap-2">
                <BarChart3 className="h-4 w-4 text-success" />
-               Active
+               Active Election
              </CardTitle>
            </CardHeader>
            <CardContent>

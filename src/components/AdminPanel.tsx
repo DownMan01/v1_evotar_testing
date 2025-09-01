@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { PanelAccessGuard } from '@/components/PanelAccessGuard';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from "@/components/ui/card";
 import { RefreshButton } from '@/components/ui/refresh-button';
+import { RefreshCw, UserCheck, UserX, AlertTriangle } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useAuth } from '@/hooks/useAuth';
@@ -205,24 +207,25 @@ export const AdminPanel = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-slate-950">
-          
-        </h2>
-        <div className="flex items-center gap-2 md:gap-4">
-          <Badge variant="outline" className="px-2 md:px-3 py-1 text-xs md:text-sm">
-            {pendingActions.filter(a => a.status === 'Pending').length + users.filter(u => u.registration_status === 'Pending').length} Pending
-          </Badge>
-          <RefreshButton
-            onClick={refreshAllData}
-            loading={loading || auditLogsLoading || userManagementLoading}
-            disabled={loading || auditLogsLoading || userManagementLoading}
-            text="Refresh Data"
-            mobileText="Refresh"
-          />
+    <PanelAccessGuard panelName="Admin Panel">
+      <div className="space-y-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-slate-950">
+            Admin Panel
+          </h2>
+          <div className="flex items-center gap-2 md:gap-4">
+            <Badge variant="outline" className="px-2 md:px-3 py-1 text-xs md:text-sm">
+              {pendingActions.filter(a => a.status === 'Pending').length + users.filter(u => u.registration_status === 'Pending').length} Pending
+            </Badge>
+            <RefreshButton
+              onClick={refreshAllData}
+              loading={loading || auditLogsLoading || userManagementLoading}
+              disabled={loading || auditLogsLoading || userManagementLoading}
+              text="Refresh Data"
+              mobileText="Refresh"
+            />
+          </div>
         </div>
-      </div>
 
       {/* Quick Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -276,7 +279,8 @@ export const AdminPanel = () => {
       </div>
 
       <Tabs defaultValue="approvals" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 gap-1">
+        <TabsList className="flex w-full overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-1 scrollbar-hide">
+          {/* Mobile: horizontal scroll, Desktop: grid layout */}
           <TabsTrigger value="approvals" className="flex items-center gap-1 md:gap-2 text-xs md:text-sm">
             <Clock className="h-3 w-3 md:h-4 md:w-4" />
             <span className="hidden sm:inline">Pending Approvals</span>
@@ -356,5 +360,6 @@ export const AdminPanel = () => {
         )}
       </Tabs>
     </div>
+    </PanelAccessGuard>
   );
 };

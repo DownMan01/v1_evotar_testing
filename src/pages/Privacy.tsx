@@ -10,7 +10,7 @@ const Privacy = () => {
     {
       icon: Shield,
       title: "Data Protection",
-      description: "We employ industry-standard encryption and security measures to protect your personal information."
+      description: "Your personal information is protected by secure storage and encrypted transmission provided by our hosting platform."
     },
     {
       icon: Eye,
@@ -49,9 +49,9 @@ const Privacy = () => {
             Privacy Policy
           </h1>
           <p className="text-base md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed px-2">
-            Your privacy is fundamental to our mission at SJCSI. Learn how we protect and respect your data.
+            Your privacy is fundamental to our mission at Saint Joseph College of Sindangan, Inc. Learn how we protect and respect your data.
           </p>
-          <p className="text-white/80 mt-3 md:mt-4 text-xs md:text-base">Last updated: January 2025</p>
+          <p className="text-white/80 mt-3 md:mt-4 text-xs md:text-base">Last updated: August 2025</p>
         </div>
       </section>
 
@@ -98,7 +98,7 @@ const Privacy = () => {
                     <h4 className="font-semibold text-foreground mb-2">Personal Information</h4>
                     <p className="text-muted-foreground">
                       We collect information you provide directly, such as your name, email address, 
-                      student ID, and SJCSI institutional affiliation when you register for an account.
+                      student ID, and your school information when you register for an account.
                     </p>
                   </div>
                    <div>
@@ -148,7 +148,7 @@ const Privacy = () => {
                     <strong>Your vote is completely anonymous.</strong> Here's how we ensure this:
                   </p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                    <li>Votes are encrypted immediately upon submission</li>
+                    <li>Votes are anonymized immediately upon submission</li>
                     <li>Vote data is separated from voter identity before storage</li>
                     <li>No one, including system administrators, can see how you voted</li>
                      <li>Vote tallies are computed without revealing individual choices</li>
@@ -186,7 +186,7 @@ const Privacy = () => {
                      We implement comprehensive security measures to protect your data:
                    </p>
                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                     <li>Database encryption for all sensitive information</li>
+                     <li>Sensitive information is protected through secure storage and strict access controls.</li>
                      <li>Role-based access controls limiting data access by user type</li>
                      <li>Secure voting session management with time-based expiration</li>
                      <li>Regular security monitoring and access logging</li>
@@ -238,7 +238,7 @@ const Privacy = () => {
                   </p>
                    <div className="space-y-2 text-muted-foreground">
                      <p><strong>Email:</strong> support@evotar.xyz</p>
-                     <p><strong>Address:</strong> SJCSI IT Department, Saint Joseph College of Sindangan, Inc.</p>
+                     <p><strong>Address:</strong> Student Affairs Office, Saint Joseph College of Sindangan, Inc.</p>
                      <p><strong>Response Time:</strong> We aim to respond to all privacy inquiries within 30 days</p>
                    </div>
                 </CardContent>

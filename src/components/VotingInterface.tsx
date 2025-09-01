@@ -447,7 +447,7 @@ export const VotingInterface = ({ election, onVoteComplete }: VotingInterfacePro
           </div>
           <div className="flex gap-2 justify-end">
             <Button variant="outline" onClick={() => setShowConfirmDialog(false)}>
-              Review Again
+              Change Selection
             </Button>
             <Button onClick={handleSubmitVotes} disabled={loading}>
               {loading ? 'Submitting...' : 'Confirm & Submit'}

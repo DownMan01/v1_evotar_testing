@@ -19,6 +19,18 @@ import Verify from "./pages/Verify";
 
 const queryClient = new QueryClient();
 
+const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+console.log(
+  "%cSTOP!",
+  "color: red; font-size: 50px; font-weight: bold; -webkit-text-stroke: 1px black; text-shadow: 0px 4px 4px rgba(0,0,0,0.5);"
+);
+
+console.log(
+  "%cIf someone asked you to paste code here, it may be a scam. They could gain access to your account and sensitive information. Only continue if you fully understand what you are doing.",
+  `color: ${isDark ? "#fff" : "#000"}; font-size: 18px; line-height: 1.5; font-weight: 500;`
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider
