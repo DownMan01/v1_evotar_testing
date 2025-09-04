@@ -211,7 +211,7 @@ export const AdminPanel = () => {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-slate-950">
-            Admin Panel
+            
           </h2>
           <div className="flex items-center gap-2 md:gap-4">
             <Badge variant="outline" className="px-2 md:px-3 py-1 text-xs md:text-sm">
