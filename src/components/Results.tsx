@@ -270,7 +270,7 @@ export const Results = () => {
                 className="flex items-center gap-2 flex-1 sm:flex-initial"
                   >
             <ExternalLink className="h-4 w-4" />
-                View on Blockchain
+                Verify Results
             </Button>
 
       <RefreshButton
